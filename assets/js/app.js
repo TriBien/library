@@ -28,6 +28,7 @@
 
   var state = loadState();
   var books = [];
+  var buildId = '';
   var route = parseHash();
   var persistTimer = 0;
   var scrollTimer = 0;
@@ -123,6 +124,16 @@
     if (className) node.className = className;
     if (html != null) node.innerHTML = html;
     return node;
+  }
+
+  /* ---------------- cache busting ----------------
+     Mobile browsers happily reuse a cached data/books.json (and a cached
+     review) on reload, so the list of books stays frozen. Every request
+     carries a version query string: the manifest is stamped with the time
+     of the load, reviews with the build id from the manifest. */
+
+  function versioned(url, version) {
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + 'v=' + encodeURIComponent(version);
   }
 
   function svg(path, className) {
@@ -298,7 +309,8 @@
 
   function fetchMarkdown(book) {
     if (contentCache[book.id]) return Promise.resolve(contentCache[book.id]);
-    return fetch(book.file)
+    var url = versioned(book.file, buildId || 'dev');
+    return fetch(url, { cache: 'no-store' })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.text();
@@ -725,13 +737,18 @@
     els.main.innerHTML =
       '<ul class="list"><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li></ul>';
 
-    fetch(MANIFEST_URL)
+    fetch(versioned(MANIFEST_URL, Date.now()), { cache: 'no-store' })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
       .then(function (data) {
         books = (data && data.books) || [];
+        var nextBuild = (data && data.build) || '';
+        if (nextBuild && nextBuild !== buildId) {
+          buildId = nextBuild;
+          contentCache = {};
+        }
         renderBadge();
         render();
       })

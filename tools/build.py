@@ -11,6 +11,7 @@ Usage:
 """
 
 import argparse
+import hashlib
 import json
 import re
 import shutil
@@ -100,9 +101,25 @@ def collect_books():
     return books
 
 
+def build_id(books):
+    """Short digest of the review contents.
+
+    Every network request for a review is suffixed with this id, so a deploy
+    that changes the text gets fresh copies while an unchanged rebuild keeps
+    the browser cache warm.
+    """
+    digest = hashlib.sha256()
+    for book in books:
+        digest.update(book["id"].encode("utf-8"))
+        digest.update(b"\0")
+        digest.update((ROOT / book["file"]).read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()[:12]
+
+
 def write_manifest(books):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    payload = {"count": len(books), "books": books}
+    payload = {"build": build_id(books), "count": len(books), "books": books}
     MANIFEST.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -144,7 +161,7 @@ def main():
     books = collect_books()
     payload = write_manifest(books)
 
-    print(f"wrote {MANIFEST.relative_to(ROOT)} ({payload['count']} books)")
+    print(f"wrote {MANIFEST.relative_to(ROOT)} ({payload['count']} books, build {payload['build']})")
     for book in books:
         print(f"  - {book['title']} — {book['author']}")
 

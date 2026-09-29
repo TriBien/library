@@ -1,5 +1,6 @@
 {
-  "count": 3,
+  "build": "bd4977d2d128",
+  "count": 7,
   "books": [
     {
       "id": "bridge_to_terabithia-katherine_paterson",
@@ -8,6 +9,24 @@
       "file": "output/bridge_to_terabithia-katherine_paterson.md",
       "excerpt": "TL;DR: Bridge to Terabithia là một tiểu thuyết thiếu nhi ngắn nhưng có chiều sâu về tình bạn, trí tưởng tượng, mất mát và quá trình trưởng thành. Điểm mạnh nhất của Katherine...",
       "words": 2525,
+      "minutes": 13
+    },
+    {
+      "id": "hot_flat_and_crowded-thomas_l_friedman",
+      "title": "Hot Flat and Crowded",
+      "author": "Thomas l Friedman",
+      "file": "output/hot_flat_and_crowded-thomas_l_friedman.md",
+      "excerpt": "TL;DR: Hot, Flat, and Crowded (2008) là một cuốn sách có giá trị lớn về cách nhìn hệ thống: Friedman nối biến đổi khí hậu, toàn cầu hóa và sự gia tăng dân số thành một “siêu hệ...",
+      "words": 2588,
+      "minutes": 13
+    },
+    {
+      "id": "jane_eyre-charlotte_brontë",
+      "title": "Jane Eyre",
+      "author": "Charlotte Brontë",
+      "file": "output/jane_eyre-charlotte_brontë.md",
+      "excerpt": "TL;DR: Jane Eyre không chỉ là một chuyện tình Gothic giữa Jane và Rochester. Ở tầng sâu hơn, đây là tiểu thuyết về phẩm giá, tự do nội tâm, quyền tự quyết và quá trình một...",
+      "words": 2609,
       "minutes": 13
     },
     {
@@ -20,12 +39,30 @@
       "minutes": 14
     },
     {
+      "id": "ramona_quimby_age_8_ramona_6-beverly_cleary",
+      "title": "Ramona Quimby Age 8 Ramona 6",
+      "author": "Beverly Cleary",
+      "file": "output/ramona_quimby_age_8_ramona_6-beverly_cleary.md",
+      "excerpt": "TL;DR: Ramona Quimby, Age 8 là một cuốn middle-grade xuất sắc vì nó không “dạy trẻ ngoan” theo kiểu áp đặt, mà cho thấy thế giới từ góc nhìn rất thật của một đứa trẻ 8 tuổi:...",
+      "words": 2399,
+      "minutes": 12
+    },
+    {
       "id": "the_forever_war_the_forever_war_1-joe_haldeman",
       "title": "The Forever War the Forever War 1",
       "author": "Joe Haldeman",
       "file": "output/the_forever_war_the_forever_war_1-joe_haldeman.md",
       "excerpt": "TL;DR: The Forever War của Joe Haldeman là một tiểu thuyết quân sự–khoa học viễn tưởng dùng chiến tranh liên sao để mổ xẻ sự phi lý của chiến tranh, khoảng cách thế hệ, sự tha...",
       "words": 2515,
+      "minutes": 13
+    },
+    {
+      "id": "the_future_we_choose-christiana_figueres_tom_rivett_carnac",
+      "title": "The Future We Choose",
+      "author": "Christiana Figueres Tom Rivett Carnac",
+      "file": "output/the_future_we_choose-christiana_figueres_tom_rivett_carnac.md",
+      "excerpt": "TL;DR: The Future We Choose không phải là cuốn sách mạnh nhất về khoa học khí hậu, nhưng rất đáng chú ý như một cuốn sách về tâm thế, hành động tập thể và khả năng thiết kế...",
+      "words": 2562,
       "minutes": 13
     }
   ]
