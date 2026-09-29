@@ -26,6 +26,10 @@
   --reader-scale: 1;
   --measure: 68ch;
 
+  /* book grid: full-bleed up to this width, then centred */
+  --grid-width: 1560px;
+  --grid-gap: 10px;
+
   color-scheme: light;
 }
 
@@ -226,7 +230,12 @@ svg { fill: currentColor; }
 /* ---------- main ---------- */
 .main {
   padding: 4px 12px calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 28px);
-  max-width: 720px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+/* the grid screens use the whole viewport, capped and centred on wide displays */
+body:not(.is-reader) .main {
+  max-width: var(--grid-width);
   margin: 0 auto;
 }
 .main:focus { outline: none; }
@@ -287,6 +296,7 @@ svg { fill: currentColor; }
 /* ---------- toolbars / filters ---------- */
 .toolbar {
   display: flex;
+  justify-content: center;
   gap: 8px;
   align-items: center;
   padding: 8px 0 4px;
@@ -294,7 +304,9 @@ svg { fill: currentColor; }
 
 .search {
   position: relative;
-  flex: 1;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 460px;
 }
 .search input {
   width: 100%;
@@ -304,8 +316,13 @@ svg { fill: currentColor; }
   border-radius: 999px;
   background: var(--surface);
   appearance: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
 .search input::placeholder { color: var(--muted); }
+.search:focus-within input {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
 .search__icon {
   position: absolute;
   left: 13px;
@@ -315,7 +332,9 @@ svg { fill: currentColor; }
   height: 18px;
   color: var(--muted);
   pointer-events: none;
+  transition: color .15s ease;
 }
+.search:focus-within .search__icon { color: var(--accent); }
 .search__clear {
   position: absolute;
   right: 3px;
@@ -327,6 +346,7 @@ svg { fill: currentColor; }
 
 .count {
   margin: 10px 2px 0;
+  text-align: center;
   font-size: 12.5px;
   color: var(--muted);
 }
@@ -337,13 +357,21 @@ svg { fill: currentColor; }
   margin: 10px 0 0;
   padding: 0;
   display: grid;
-  gap: 10px;
+  gap: var(--grid-gap);
+  /* tracks have a max width, so slack becomes symmetric centring */
+  justify-content: center;
 }
 
-.row { position: relative; }
+.row {
+  position: relative;
+  display: flex;
+}
 
 .card {
+  flex: 1;
+  min-width: 0;
   display: flex;
+  flex-direction: column;
   gap: 12px;
   align-items: flex-start;
   padding: 14px 56px 14px 14px;
@@ -383,7 +411,14 @@ svg { fill: currentColor; }
   overflow: hidden;
 }
 
-.card__body { min-width: 0; flex: 1; display: block; }
+.card__body {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
 
 .card__title {
   display: -webkit-box;
@@ -404,8 +439,9 @@ svg { fill: currentColor; }
 }
 
 .card__excerpt {
+  flex: 1 1 auto;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-top: 7px;
@@ -418,8 +454,9 @@ svg { fill: currentColor; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 9px;
+  gap: 4px 8px;
+  margin-top: auto;
+  padding-top: 9px;
   font-size: 11.5px;
   font-weight: 550;
   color: var(--muted);
@@ -667,7 +704,11 @@ body.is-reader .toast { bottom: calc(env(safe-area-inset-bottom) + 16px); }
 @media (min-width: 640px) {
   .appbar { padding-left: 20px; padding-right: 20px; }
   .main { padding-left: 20px; padding-right: 20px; }
-  .list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 340px));
+    /* one fixed row height for every card, sized for a 2-line title */
+    grid-auto-rows: 252px;
+  }
   .tabbar {
     left: 50%;
     right: auto;
@@ -679,6 +720,31 @@ body.is-reader .toast { bottom: calc(env(safe-area-inset-bottom) + 16px); }
   }
 }
 
-@media (min-width: 1024px) {
-  .list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 900px) {
+  .list { grid-template-columns: repeat(3, minmax(0, 320px)); }
+}
+
+@media (min-width: 1120px) {
+  .list {
+    grid-template-columns: repeat(4, minmax(0, 300px));
+    grid-auto-rows: 252px;
+  }
+  .card__excerpt { -webkit-line-clamp: 2; }
+}
+
+@media (min-width: 1280px) {
+  .appbar { padding-left: 24px; padding-right: 24px; }
+  .main { padding-left: 24px; padding-right: 24px; }
+  .list {
+    grid-template-columns: repeat(5, minmax(0, 272px));
+    gap: 12px;
+  }
+}
+
+/* keep the app bar aligned with the centred grid on very wide screens */
+@media (min-width: 1610px) {
+  .appbar {
+    padding-left: calc((100% - var(--grid-width)) / 2 + 24px);
+    padding-right: calc((100% - var(--grid-width)) / 2 + 24px);
+  }
 }

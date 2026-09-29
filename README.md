@@ -12,6 +12,10 @@ runtime dependencies, no backend.
 - Search by title or author with the box above the list.
 - The check button on a card marks the book as **Done** without opening it.
 
+On a phone the list is a single column of full-width cards. From tablet width
+up it becomes a uniform grid — up to five equal columns filling the screen on a
+laptop.
+
 **Reading a book**
 
 - The `TL;DR` paragraph is highlighted as a lede; numbered sections in the
@@ -75,8 +79,17 @@ python3 tools/build.py --no-site
   so every `href`/`src`/`fetch` must stay relative.
 - **Markdown is fetched lazily.** `data/books.json` only carries metadata;
   the `.md` file is requested when a book is opened and cached in memory.
-- **Styling:** mobile-first, one column, then `@media (min-width: 640px)`
-  upgrades the grid. Colours come from CSS custom properties in `:root` with a
+- **Styling:** mobile-first. The grid is one column on phones and goes
+  2 → 3 → 4 → **5 columns** at 640 / 900 / 1120 / 1280 px. It is full-bleed up
+  to `--grid-width` (1560 px) and centred above that, so cards never stretch
+  across a wide monitor; the app bar gets matching padding so the title stays
+  aligned with the grid. Tracks have a max width (272 px at 5 columns) plus
+  `justify-content: center`, so the block stays centred on any screen. From
+  640 px up, `grid-auto-rows` pins every card to one height (252 px, sized for a
+  two-line title) so cards stay uniform, and the card is a flex column with
+  `.card__meta { margin-top: auto }` so the meta line always sits at the bottom.
+  The reader stays measure-bound and centred.
+- **Colours** come from CSS custom properties in `:root` with a
   `[data-theme="dark"]` override — never hard-code a colour.
 - **Touch targets** are at least 44 px effective size; small controls use a
   `::before` pseudo-element to expand the hit area.
