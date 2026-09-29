@@ -1,0 +1,32 @@
+{
+  "count": 3,
+  "books": [
+    {
+      "id": "bridge_to_terabithia-katherine_paterson",
+      "title": "Bridge to Terabithia",
+      "author": "Katherine Paterson",
+      "file": "output/bridge_to_terabithia-katherine_paterson.md",
+      "excerpt": "TL;DR: Bridge to Terabithia là một tiểu thuyết thiếu nhi ngắn nhưng có chiều sâu về tình bạn, trí tưởng tượng, mất mát và quá trình trưởng thành. Điểm mạnh nhất của Katherine...",
+      "words": 2525,
+      "minutes": 13
+    },
+    {
+      "id": "moll_flanders-daniel_defoe",
+      "title": "Moll Flanders",
+      "author": "Daniel Defoe",
+      "file": "output/moll_flanders-daniel_defoe.md",
+      "excerpt": "TL;DR: Moll Flanders (1722) không chỉ là câu chuyện về một người phụ nữ trộm cắp và sinh tồn. Đọc ở tầng sâu hơn, đây là một tiểu thuyết về ham muốn, tiền bạc, địa vị xã hội,...",
+      "words": 2734,
+      "minutes": 14
+    },
+    {
+      "id": "the_forever_war_the_forever_war_1-joe_haldeman",
+      "title": "The Forever War the Forever War 1",
+      "author": "Joe Haldeman",
+      "file": "output/the_forever_war_the_forever_war_1-joe_haldeman.md",
+      "excerpt": "TL;DR: The Forever War của Joe Haldeman là một tiểu thuyết quân sự–khoa học viễn tưởng dùng chiến tranh liên sao để mổ xẻ sự phi lý của chiến tranh, khoảng cách thế hệ, sự tha...",
+      "words": 2515,
+      "minutes": 13
+    }
+  ]
+}
