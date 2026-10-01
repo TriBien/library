@@ -8,7 +8,36 @@
 <meta name="theme-color" content="#faf9f7">
 <title>Library</title>
 <link rel="stylesheet" href="assets/css/styles.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
+
+<!-- Favicon (browser tab icon) -->
+    <link rel="icon" href="icons/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon" />
+
+    <!-- PNG favicon alternatives (better for modern browsers) -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="icons/favicon-16x16.png"
+    />
+
+    <!-- Apple Touch Icon (when saved to iOS home screen) -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+
+    <!-- Android / PWA Icon -->
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" 
+
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -38,6 +67,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="assets/vendor/marked.min.js"></script>
+<script src="assets/js/gdrive.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
