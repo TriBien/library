@@ -1,7 +1,16 @@
 {
-  "build": "bd4977d2d128",
-  "count": 7,
+  "build": "a1aef6178c73",
+  "count": 43,
   "books": [
+    {
+      "id": "an_lạc_từng_bước_chân-thích_nhất_hạnh",
+      "title": "An Lạc Từng Bước Chân",
+      "author": "Thích Nhất Hạnh",
+      "file": "output/an_lạc_từng_bước_chân-thích_nhất_hạnh.md",
+      "excerpt": "TL;DR: An Lạc Từng Bước Chân (Peace Is Every Step) là một trong những tác phẩm nhập môn cô đọng nhất của Thích Nhất Hạnh về chánh niệm trong đời sống thường nhật. Giá trị lớn...",
+      "words": 3159,
+      "minutes": 16
+    },
     {
       "id": "bridge_to_terabithia-katherine_paterson",
       "title": "Bridge to Terabithia",
@@ -10,6 +19,78 @@
       "excerpt": "TL;DR: Bridge to Terabithia là một tiểu thuyết thiếu nhi ngắn nhưng có chiều sâu về tình bạn, trí tưởng tượng, mất mát và quá trình trưởng thành. Điểm mạnh nhất của Katherine...",
       "words": 2525,
       "minutes": 13
+    },
+    {
+      "id": "civilization_and_capitalism_15th18th_century-fernand_braudel",
+      "title": "Civilization and Capitalism 15th18th Century",
+      "author": "Fernand Braudel",
+      "file": "output/civilization_and_capitalism_15th18th_century-fernand_braudel.md",
+      "excerpt": "TL;DR: Civilization and Capitalism, 15th–18th Century là một trong những công trình lớn nhất của sử học thế kỷ XX. Luận điểm cốt lõi của Fernand Braudel là: không thể hiểu chủ...",
+      "words": 4222,
+      "minutes": 21
+    },
+    {
+      "id": "cradle_to_cradle-william_mcdonough_michael_braungart",
+      "title": "Cradle to Cradle",
+      "author": "William Mcdonough Michael Braungart",
+      "file": "output/cradle_to_cradle-william_mcdonough_michael_braungart.md",
+      "excerpt": "TL;DR: Cradle to Cradle là một trong những cuốn sách có ảnh hưởng lớn đến tư duy thiết kế tuần hoàn. Giá trị cốt lõi của nó không nằm ở các giải pháp kỹ thuật cụ thể, mà ở một...",
+      "words": 3035,
+      "minutes": 15
+    },
+    {
+      "id": "cái_cười_của_thánh_nhân-nguyễn_duy_cần",
+      "title": "Cái Cười Của Thánh Nhân",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/cái_cười_của_thánh_nhân-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Cái cười của Thánh nhân của Nguyễn Duy Cần không nên đọc như một cuốn sách dạy “cách sống khôn ngoan” đơn thuần. Cốt lõi của nó là một bài học về thái độ sống: giữ...",
+      "words": 2748,
+      "minutes": 14
+    },
+    {
+      "id": "có_và_là-erich_fromm",
+      "title": "Có Và Là",
+      "author": "Erich Fromm",
+      "file": "output/có_và_là-erich_fromm.md",
+      "excerpt": "TL;DR: Có và Là (To Have or To Be?, 1976) của Erich Fromm là một tác phẩm triết học–tâm lý học về hai phương thức tồn tại: có — xây dựng bản thân quanh sở hữu, kiểm soát và...",
+      "words": 2854,
+      "minutes": 14
+    },
+    {
+      "id": "cổ_nhân-nguyễn_duy_cần",
+      "title": "Cổ Nhân",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/cổ_nhân-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Cổ nhân là một tác phẩm khá đặc biệt của Nguyễn Duy Cần: không phải sách “dạy xử thế” theo nghĩa thông thường, mà là một cuộc đối thoại với tư tưởng và cách phê bình...",
+      "words": 2777,
+      "minutes": 14
+    },
+    {
+      "id": "dịch_kinh_tường_giải-nguyễn_duy_cần",
+      "title": "Dịch Kinh Tường Giải",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/dịch_kinh_tường_giải-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Dịch Kinh Tường Giải là công trình tham vọng nhất của Nguyễn Duy Cần về Kinh Dịch: không chủ yếu đọc Dịch như sách bói toán, mà như một mô hình tư duy về biến dịch, quan...",
+      "words": 2983,
+      "minutes": 15
+    },
+    {
+      "id": "frankenstein-mary_shelley",
+      "title": "Frankenstein",
+      "author": "Mary Shelley",
+      "file": "output/frankenstein-mary_shelley.md",
+      "excerpt": "TL;DR: Frankenstein; or, The Modern Prometheus không đơn thuần là một tiểu thuyết kinh dị về “quái vật”. Cốt lõi của tác phẩm là câu hỏi: khi con người có khả năng tạo ra sự...",
+      "words": 2942,
+      "minutes": 15
+    },
+    {
+      "id": "full_catastrophe_living-jon_kabat_zinn",
+      "title": "Full Catastrophe Living",
+      "author": "Jon Kabat Zinn",
+      "file": "output/full_catastrophe_living-jon_kabat_zinn.md",
+      "excerpt": "TL;DR: Full Catastrophe Living của Jon Kabat-Zinn là một trong những tác phẩm nền tảng đưa mindfulness (chánh niệm) từ truyền thống thiền vào môi trường y khoa và đời sống hiện...",
+      "words": 2979,
+      "minutes": 15
     },
     {
       "id": "hot_flat_and_crowded-thomas_l_friedman",
@@ -21,6 +102,15 @@
       "minutes": 13
     },
     {
+      "id": "imagined_communities-benedict_anderson",
+      "title": "Imagined Communities",
+      "author": "Benedict Anderson",
+      "file": "output/imagined_communities-benedict_anderson.md",
+      "excerpt": "TL;DR: Imagined Communities (1983, revised 1991) của Benedict Anderson là một trong những công trình nền tảng để hiểu chủ nghĩa dân tộc. Luận điểm cốt lõi: dân tộc là một “cộng...",
+      "words": 2963,
+      "minutes": 15
+    },
+    {
       "id": "jane_eyre-charlotte_brontë",
       "title": "Jane Eyre",
       "author": "Charlotte Brontë",
@@ -28,6 +118,24 @@
       "excerpt": "TL;DR: Jane Eyre không chỉ là một chuyện tình Gothic giữa Jane và Rochester. Ở tầng sâu hơn, đây là tiểu thuyết về phẩm giá, tự do nội tâm, quyền tự quyết và quá trình một...",
       "words": 2609,
       "minutes": 13
+    },
+    {
+      "id": "liệt_tử-liệt_tử",
+      "title": "Liệt Tử",
+      "author": "Liệt Tử",
+      "file": "output/liệt_tử-liệt_tử.md",
+      "excerpt": "TL;DR: Liệt Tử (列子, thường gọi Liệt Tử Xung Hư Chân Kinh) là một tác phẩm Đạo gia giàu truyện ngụ ngôn, nghịch lý và tư tưởng về tự nhiên, vô vi, sinh tử, tri thức và giới hạn...",
+      "words": 3560,
+      "minutes": 18
+    },
+    {
+      "id": "luận_ngữ-khổng_tử",
+      "title": "Luận Ngữ",
+      "author": "Khổng Tử",
+      "file": "output/luận_ngữ-khổng_tử.md",
+      "excerpt": "TL;DR: Luận Ngữ không phải một cuốn sách triết học được viết thành hệ thống, mà là tập hợp lời nói, đối thoại và hành vi của Khổng Tử cùng học trò. Hạt nhân tư tưởng của sách...",
+      "words": 3176,
+      "minutes": 16
     },
     {
       "id": "moll_flanders-daniel_defoe",
@@ -39,6 +147,60 @@
       "minutes": 14
     },
     {
+      "id": "muốn_an_được_an-thích_nhất_hạnh",
+      "title": "Muốn an Được an",
+      "author": "Thích Nhất Hạnh",
+      "file": "output/muốn_an_được_an-thích_nhất_hạnh.md",
+      "excerpt": "TL;DR: Muốn An Được An của Thích Nhất Hạnh là một cuốn sách thực hành về an trú, chánh niệm và chuyển hóa bất an trong đời sống hằng ngày. Giá trị lớn nhất của sách không nằm ở...",
+      "words": 2525,
+      "minutes": 13
+    },
+    {
+      "id": "mạnh_tử-mạnh_tử",
+      "title": "Mạnh Tử",
+      "author": "Mạnh Tử",
+      "file": "output/mạnh_tử-mạnh_tử.md",
+      "excerpt": "TL;DR: Mạnh Tử là một trong những tác phẩm nền tảng của Nho gia, phát triển tư tưởng Khổng Tử theo hướng tâm tính luận và chính trị đạo đức. Hạt nhân của sách là: con người có...",
+      "words": 3153,
+      "minutes": 16
+    },
+    {
+      "id": "natural_capitalism-paul_hawken_amory_lovins_l_hunter_lovins",
+      "title": "Natural Capitalism",
+      "author": "Paul Hawken Amory Lovins l Hunter Lovins",
+      "file": "output/natural_capitalism-paul_hawken_amory_lovins_l_hunter_lovins.md",
+      "excerpt": "TL;DR: Natural Capitalism (1999) là một trong những cuốn sách quan trọng về tư duy kinh tế–sinh thái: nó đảo ngược câu hỏi từ “làm thế nào khai thác thiên nhiên hiệu quả hơn?”...",
+      "words": 3803,
+      "minutes": 19
+    },
+    {
+      "id": "nghệ_thuật_sống-epictetus",
+      "title": "Nghệ Thuật Sống",
+      "author": "Epictetus",
+      "file": "output/nghệ_thuật_sống-epictetus.md",
+      "excerpt": "TL;DR: Nghệ Thuật Sống của Epictetus là một bản nhập môn rất cô đọng về Khắc kỷ (Stoicism): tự do không đến từ việc kiểm soát thế giới, mà từ việc làm chủ phán đoán, ham muốn,...",
+      "words": 2940,
+      "minutes": 15
+    },
+    {
+      "id": "những_lá_thư_đạo_đức-seneca",
+      "title": "Những Lá Thư Đạo Đức",
+      "author": "Seneca",
+      "file": "output/những_lá_thư_đạo_đức-seneca.md",
+      "excerpt": "TL;DR: Những Lá Thư Đạo Đức (Letters from a Stoic) của Seneca là một trong những tác phẩm thực hành quan trọng nhất của chủ nghĩa Khắc kỷ. Giá trị lớn nhất của sách không nằm ở...",
+      "words": 2831,
+      "minutes": 14
+    },
+    {
+      "id": "phi_lý_trí-dan_ariely",
+      "title": "Phi Lý Trí",
+      "author": "Dan Ariely",
+      "file": "output/phi_lý_trí-dan_ariely.md",
+      "excerpt": "TL;DR: Phi Lý Trí (Predictably Irrational, 2008) là một cuốn nhập môn rất tốt về kinh tế học hành vi: Ariely cho thấy con người không chỉ “đôi khi” sai mà thường sai theo những...",
+      "words": 3131,
+      "minutes": 16
+    },
+    {
       "id": "ramona_quimby_age_8_ramona_6-beverly_cleary",
       "title": "Ramona Quimby Age 8 Ramona 6",
       "author": "Beverly Cleary",
@@ -46,6 +208,60 @@
       "excerpt": "TL;DR: Ramona Quimby, Age 8 là một cuốn middle-grade xuất sắc vì nó không “dạy trẻ ngoan” theo kiểu áp đặt, mà cho thấy thế giới từ góc nhìn rất thật của một đứa trẻ 8 tuổi:...",
       "words": 2399,
       "minutes": 12
+    },
+    {
+      "id": "regeneration-andrew_winston",
+      "title": "Regeneration",
+      "author": "Andrew Winston",
+      "file": "output/regeneration-andrew_winston.md",
+      "excerpt": "TL;DR: Có một điểm cần đính chính: Andrew Winston không có cuốn sách tên Regeneration. Tác phẩm gần nhất với mô tả của bạn là Net Positive: How Courageous Companies Thrive by...",
+      "words": 1555,
+      "minutes": 8
+    },
+    {
+      "id": "siddhartha-hermann_hesse",
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "file": "output/siddhartha-hermann_hesse.md",
+      "excerpt": "TL;DR: Siddhartha của Hermann Hesse là một tiểu thuyết ngắn về hành trình tự chứng ngộ: con người không thể đạt tự do chỉ bằng học thuyết, tôn giáo hay lời dạy của người khác,...",
+      "words": 3082,
+      "minutes": 15
+    },
+    {
+      "id": "small_is_beautiful-e_f_schumacher",
+      "title": "Small Is Beautiful",
+      "author": "e f Schumacher",
+      "file": "output/small_is_beautiful-e_f_schumacher.md",
+      "excerpt": "TL;DR: Small Is Beautiful (1973) của E. F. Schumacher là một phê bình sâu sắc đối với mô hình kinh tế lấy tăng trưởng, quy mô và hiệu suất vật chất làm trung tâm. Giá trị lớn...",
+      "words": 2666,
+      "minutes": 13
+    },
+    {
+      "id": "sức_mạnh_của_hiện_tại-eckhart_tolle",
+      "title": "Sức Mạnh Của Hiện Tại",
+      "author": "Eckhart Tolle",
+      "file": "output/sức_mạnh_của_hiện_tại-eckhart_tolle.md",
+      "excerpt": "TL;DR: Sức Mạnh Của Hiện Tại (The Power of Now, 1997) của Eckhart Tolle là một cuốn sách về chánh niệm, bản chất của “cái tôi” và cách thoát khỏi sự đồng nhất với dòng suy...",
+      "words": 2551,
+      "minutes": 13
+    },
+    {
+      "id": "the_age_of_sustainable_development-jeffrey_d_sachs",
+      "title": "The Age of Sustainable Development",
+      "author": "Jeffrey d Sachs",
+      "file": "output/the_age_of_sustainable_development-jeffrey_d_sachs.md",
+      "excerpt": "TL;DR: The Age of Sustainable Development (2015) của Jeffrey D. Sachs là một cuốn nhập môn rất rộng và có tính hệ thống về phát triển bền vững. Giá trị lớn nhất của sách không...",
+      "words": 2782,
+      "minutes": 14
+    },
+    {
+      "id": "the_fate_of_rome-kyle_harper",
+      "title": "The Fate of Rome",
+      "author": "Kyle Harper",
+      "file": "output/the_fate_of_rome-kyle_harper.md",
+      "excerpt": "TL;DR: The Fate of Rome của Kyle Harper là một trong những cách giải thích hiện đại đáng chú ý nhất về sự suy tàn của Đế chế La Mã: Harper đưa khí hậu + dịch bệnh + sinh thái +...",
+      "words": 3129,
+      "minutes": 16
     },
     {
       "id": "the_forever_war_the_forever_war_1-joe_haldeman",
@@ -64,6 +280,114 @@
       "excerpt": "TL;DR: The Future We Choose không phải là cuốn sách mạnh nhất về khoa học khí hậu, nhưng rất đáng chú ý như một cuốn sách về tâm thế, hành động tập thể và khả năng thiết kế...",
       "words": 2562,
       "minutes": 13
+    },
+    {
+      "id": "the_limits_to_growth-donella_h_meadows_dennis_l_meadows_jørgen_randers_william_w_behrens_iii",
+      "title": "The Limits to Growth",
+      "author": "Donella h Meadows Dennis l Meadows Jørgen Randers William w Behrens Iii",
+      "file": "output/the_limits_to_growth-donella_h_meadows_dennis_l_meadows_jørgen_randers_william_w_behrens_iii.md",
+      "excerpt": "TL;DR: The Limits to Growth (1972) không phải một cuốn sách “dự đoán ngày tận thế”, mà là một bài tập về tư duy hệ thống: một nền kinh tế có thể tăng trưởng rất lâu nhờ phản...",
+      "words": 3124,
+      "minutes": 16
+    },
+    {
+      "id": "the_mediterranean_and_the_mediterranean_world_in_the_age_of_philip_ii-fernand_braudel",
+      "title": "The Mediterranean and the Mediterranean World in the Age of Philip Ii",
+      "author": "Fernand Braudel",
+      "file": "output/the_mediterranean_and_the_mediterranean_world_in_the_age_of_philip_ii-fernand_braudel.md",
+      "excerpt": "TL;DR: The Mediterranean and the Mediterranean World in the Age of Philip II của Fernand Braudel là một trong những công trình nền tảng của sử học thế kỷ XX. Giá trị lớn nhất...",
+      "words": 3427,
+      "minutes": 17
+    },
+    {
+      "id": "the_narrow_corridor-daron_acemoglu_james_a_robinson",
+      "title": "The Narrow Corridor",
+      "author": "Daron Acemoglu James a Robinson",
+      "file": "output/the_narrow_corridor-daron_acemoglu_james_a_robinson.md",
+      "excerpt": "TL;DR: The Narrow Corridor là một trong những cuốn sách quan trọng nhất của Daron Acemoglu và James A. Robinson về tự do, nhà nước và xã hội. Luận đề trung tâm: tự do không...",
+      "words": 3327,
+      "minutes": 17
+    },
+    {
+      "id": "the_power_of_now-eckhart_tolle",
+      "title": "The Power of Now",
+      "author": "Eckhart Tolle",
+      "file": "output/the_power_of_now-eckhart_tolle.md",
+      "excerpt": "TL;DR: The Power of Now của Eckhart Tolle là một cuốn sách về chánh niệm, bản chất của bản ngã và tự do khỏi sự đồng nhất với dòng suy nghĩ. Giá trị lớn nhất của sách nằm ở...",
+      "words": 2315,
+      "minutes": 12
+    },
+    {
+      "id": "the_silk_roads_a_new_history_of_the_world-peter_frankopan",
+      "title": "The Silk Roads a New History of the World",
+      "author": "Peter Frankopan",
+      "file": "output/the_silk_roads_a_new_history_of_the_world-peter_frankopan.md",
+      "excerpt": "TL;DR: The Silk Roads là một cuốn lịch sử thế giới có ý tưởng trung tâm rất mạnh nhưng tham vọng lớn hơn khả năng bao quát. Giá trị lớn nhất của Frankopan không phải là “viết...",
+      "words": 3191,
+      "minutes": 16
+    },
+    {
+      "id": "the_stranger-albert_camus",
+      "title": "The Stranger",
+      "author": "Albert Camus",
+      "file": "output/the_stranger-albert_camus.md",
+      "excerpt": "TL;DR: The Stranger (L’Étranger, 1942) của Albert Camus không chủ yếu là một câu chuyện về “một kẻ vô cảm”, mà là một thí nghiệm triết học về sự phi lý (absurdity): con người...",
+      "words": 2823,
+      "minutes": 14
+    },
+    {
+      "id": "thiền_đạo_tinh_hoa-nguyễn_duy_cần",
+      "title": "Thiền Đạo Tinh Hoa",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/thiền_đạo_tinh_hoa-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Thiền Đạo Tinh Hoa là một trường hợp đặc biệt trong di sản Nguyễn Duy Cần: đây là một bản thảo di cảo mà theo các nguồn hiện có đã bị thất lạc, nên không nên đánh giá nó...",
+      "words": 3075,
+      "minutes": 15
+    },
+    {
+      "id": "trăm_năm_cô_đơn-gabriel_garcía_márquez",
+      "title": "Trăm Năm Cô Đơn",
+      "author": "Gabriel García Márquez",
+      "file": "output/trăm_năm_cô_đơn-gabriel_garcía_márquez.md",
+      "excerpt": "TL;DR: Trăm năm cô đơn là một trong những tiểu thuyết quan trọng nhất của văn học thế kỷ XX: dùng một gia đình và một ngôi làng hư cấu để kể lịch sử nhiều thế hệ của Mỹ Latinh....",
+      "words": 2717,
+      "minutes": 14
+    },
+    {
+      "id": "văn_minh_đông_phương_và_tây_phương-nguyễn_duy_cần",
+      "title": "Văn Minh Đông Phương Và Tây Phương",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/văn_minh_đông_phương_và_tây_phương-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Văn minh Đông phương và Tây phương của Nguyễn Duy Cần là một cuốn sách đáng đọc nếu bạn muốn hiểu cách một học giả Việt Nam thế kỷ XX nhìn về sự khác biệt giữa hai hệ...",
+      "words": 2191,
+      "minutes": 11
+    },
+    {
+      "id": "wherever_you_go_there_you_are-jon_kabat_zinn",
+      "title": "Wherever You Go There You Are",
+      "author": "Jon Kabat Zinn",
+      "file": "output/wherever_you_go_there_you_are-jon_kabat_zinn.md",
+      "excerpt": "TL;DR: Wherever You Go, There You Are của Jon Kabat-Zinn là một cuốn nhập môn rất tốt về mindfulness (chánh niệm): cốt lõi không phải “làm cho tâm trống rỗng”, mà là học cách...",
+      "words": 2484,
+      "minutes": 12
+    },
+    {
+      "id": "óc_sáng_suốt-nguyễn_duy_cần",
+      "title": "Óc Sáng Suốt",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/óc_sáng_suốt-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Óc sáng suốt của Nguyễn Duy Cần là một cuốn sách về rèn luyện năng lực tư duy và phán đoán, nhấn mạnh việc thoát khỏi thành kiến, cảm xúc, định kiến đám đông và thói...",
+      "words": 2498,
+      "minutes": 12
+    },
+    {
+      "id": "để_thành_nhà_văn-nguyễn_duy_cần",
+      "title": "Để Thành Nhà Văn",
+      "author": "Nguyễn Duy Cần",
+      "file": "output/để_thành_nhà_văn-nguyễn_duy_cần.md",
+      "excerpt": "TL;DR: Để thành nhà văn của Nguyễn Duy Cần (Thu Giang) không phải là một “cẩm nang viết văn” theo nghĩa kỹ thuật hiện đại, mà là một cuốn sách về nền tảng tư tưởng, vốn sống,...",
+      "words": 2498,
+      "minutes": 12
     }
   ]
 }

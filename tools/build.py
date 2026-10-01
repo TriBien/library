@@ -5,6 +5,9 @@ Reads every markdown review from ``output/`` (``[book name]-[author].md``),
 writes the book manifest to ``data/books.json`` and assembles a deployable
 copy of the site in ``_site/`` (index.html, assets/, data/, output/).
 
+``data/config.json`` is hand written, not generated: it carries the OAuth
+client id used by the Google sign-in button. It is copied verbatim.
+
 Usage:
     python3 tools/build.py            # refresh data/books.json + _site/
     python3 tools/build.py --no-site  # only refresh data/books.json
@@ -22,6 +25,7 @@ OUTPUT_DIR = ROOT / "output"
 DATA_DIR = ROOT / "data"
 SITE_DIR = ROOT / "_site"
 MANIFEST = DATA_DIR / "books.json"
+CONFIG = DATA_DIR / "config.json"
 
 SITE_FILES = ["index.html", ".nojekyll"]
 SITE_DIRS = ["assets"]
@@ -144,6 +148,8 @@ def build_site(books):
     data = SITE_DIR / DATA_DIR.name
     data.mkdir(parents=True, exist_ok=True)
     shutil.copy2(MANIFEST, data / MANIFEST.name)
+    if CONFIG.exists():
+        shutil.copy2(CONFIG, data / CONFIG.name)
 
     out = SITE_DIR / OUTPUT_DIR.name
     out.mkdir(parents=True, exist_ok=True)

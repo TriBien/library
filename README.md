@@ -34,7 +34,65 @@ date they were finished and a badge on the tab. Re-read any of them, or use the
 undo button on the card to move a book back to the Library.
 
 Everything (theme, text size, finished books, reading positions) is stored in
-your browser's `localStorage` under `library.state.v1`. Nothing is uploaded.
+one hidden file in the reader's own Google Drive — see **Google sign-in** below.
+Until the first sign-in, a temporary copy is kept in the browser's
+`localStorage` under `library.temp.v1` so nothing is lost on reload; that copy
+is uploaded and deleted at the first successful sync.
+
+## Google sign-in
+
+The person button in the top bar opens **Account**, where the reader signs in
+with their own Google account. Signing in is what stores the library: without
+it, everything stays in the browser only.
+
+The state above (theme, text size, finished books, reading positions) lives in a
+single file — `library.json` by default — inside the **appDataFolder** of the
+reader's own Google Drive. That folder is private to this application: it does
+not show up in Drive's file list, cannot be shared, and is readable only by this
+site. So the same library follows the reader between browsers and devices
+without any server in the middle.
+
+- Changes are pushed a few seconds after you make them, and pulled again on the
+  next visit or from **Sync now**.
+- Two devices never overwrite each other: per book the newest entry wins, and
+  the single settings (theme, text size) follow whichever side wrote last.
+- Signing out only drops the local session — the file in Drive is left alone.
+- The access token is kept in `localStorage` under `library.auth.v1` and lasts
+  one hour. It is never refreshed silently: after an hour the account screen
+  asks to sign in again. The token never touches the Drive document.
+
+### Setting it up
+
+Sign-in is inert until an OAuth client exists, so the account screen shows the
+setup checklist instead of the button.
+
+1. In the [Cloud console](https://console.cloud.google.com/), create a project
+   and enable the **Google Drive API** for it.
+2. Configure the **OAuth consent screen** and add yourself as a test user (an
+   unpublished app in *Testing* mode only works for the accounts you list).
+3. Create an **OAuth client** of type **Web application**.
+4. Under *Authorised JavaScript origins* add every origin the site is served
+   from — scheme, host and port, with no path or trailing slash, and they must
+   match the address bar exactly (an unregistered origin gives
+   `Error 400: origin_mismatch`). For local previews that is usually
+   `http://localhost:8099` (the default port from step 2 below); `127.0.0.1`
+   and `localhost` are *different* origins, so add the one you actually open.
+   For production add `https://<user>.github.io`.
+5. Put the client id into `data/config.json`:
+
+   ```json
+   {
+     "googleClientId": "123456789-abcdef.apps.googleusercontent.com",
+     "driveFileName": "library.json"
+   }
+   ```
+
+6. Rebuild and push.
+
+The scopes requested are `openid email profile` (used only for the greeting on
+the account screen) and `https://www.googleapis.com/auth/drive.appdata` (the
+hidden folder). Because `drive.appdata` is a *sensitive* scope, Google shows a
+warning screen until the app is verified for production use.
 
 ## Development
 
@@ -44,9 +102,11 @@ your browser's `localStorage` under `library.state.v1`. Nothing is uploaded.
 output/                 book reviews: [book name]-[author].md
 tools/build.py          scans output/ -> data/books.json, assembles _site/
 data/books.json         generated manifest consumed by the app
+data/config.json        hand written: OAuth client id + Drive file name
 index.html              app shell
 assets/css/styles.css   design tokens, themes, all layout
-assets/js/app.js        router, screens, state
+assets/js/app.js        router, screens, state, drive sync
+assets/js/gdrive.js     Google sign-in + Drive REST calls
 assets/vendor/          vendored libraries (marked) — never load from a CDN
 _site/                  generated deployable copy (git-ignored)
 ```
@@ -72,9 +132,9 @@ python3 tools/build.py --no-site
 
 ### Coding guidelines
 
-- **No build step, no framework.** `index.html` loads two plain scripts; the app
-  is one IIFE in `assets/js/app.js` using ES5-style syntax so it runs in older
-  mobile browsers without transpiling.
+- **No build step, no framework.** `index.html` loads three plain scripts; the
+  app is two small IIFEs, `assets/js/app.js` and `assets/js/gdrive.js`, using
+  ES5-style syntax so they run in older mobile browsers without transpiling.
 - **Relative URLs only.** The site is served from `https://<user>.github.io/library/`,
   so every `href`/`src`/`fetch` must stay relative.
 - **Markdown is fetched lazily.** `data/books.json` only carries metadata;
@@ -96,9 +156,20 @@ python3 tools/build.py --no-site
 - **Prefer in-place refreshes** over re-rendering a screen: the search input
   keeps focus and value because only the list container is replaced
   (`collection.refresh()` in `app.js`).
-- **State changes** go through `setDone()` / `persist()` so `localStorage`,
-  the tab badge and both screens stay in sync.
-- Bump `STATE_KEY` if you ever change the stored shape.
+- **State changes** go through `setDone()` / `touch()` so the tab badge, both
+  screens and the Drive copy stay in sync. `touch()` stamps `state.updatedAt`,
+  refreshes the signed-out copy and schedules a debounced push.
+- **Drive is the store; localStorage is plumbing.** Only the OAuth session
+  (`library.auth.v1`) and the temporary pre-sign-in copy (`library.temp.v1`)
+  are stored locally. The first successful sync uploads that copy and clears
+  it, so the Drive document is the single source of truth afterwards.
+- Bump `DOC_VERSION` if you ever change the stored shape.
+- **One external script.** `accounts.google.com/gsi/client` is fetched on
+  demand by `gdrive.warmup()` when the account screen opens — never at boot,
+  and never for a reader who never taps it. Everything else is local.
+- **Auth lives apart from the library.** The token sits in `library.auth.v1`,
+  never in the Drive document. When a session exists the first paint waits for
+  the Drive pull, so the list never flashes an empty history.
 
 ### Deploying to GitHub Pages
 

@@ -14,6 +14,7 @@
   --accent: #a45a1b;
   --accent-soft: #f6ece1;
   --accent-contrast: #ffffff;
+  --danger: #b3261e;
   --shadow: 0 1px 2px rgba(24, 20, 15, .05), 0 8px 24px rgba(24, 20, 15, .06);
 
   --appbar-h: 56px;
@@ -43,6 +44,7 @@
   --accent: #e2a35c;
   --accent-soft: #2a231b;
   --accent-contrast: #1b1207;
+  --danger: #f2b8b5;
   --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .35);
 
   color-scheme: dark;
@@ -677,6 +679,105 @@ body.is-reader .main { padding-top: 10px; }
   font-size: 12.5px;
   color: var(--muted);
 }
+
+/* ---------- account / sync ---------- */
+.account {
+  width: min(560px, 100%);
+  margin: 26px auto 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+}
+
+.account__head { display: flex; align-items: center; gap: 14px; }
+
+.account__avatar,
+.account__mark {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+}
+.account__avatar {
+  object-fit: cover;
+  background: var(--surface-2);
+}
+.account__mark {
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+}
+.account__mark svg { width: 24px; height: 24px; }
+
+.account__who { min-width: 0; }
+.account__name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.account__sub {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.account__actions { display: grid; gap: 10px; }
+
+.account__status {
+  margin: 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.account__status.is-error { color: var(--danger); }
+
+.account__note {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.account__note code,
+.account__setup code {
+  padding: .15em .4em;
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-size: .9em;
+}
+
+/* shown when no OAuth client id is configured yet */
+.account__setup {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.account__setup-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+}
+.account__setup ol {
+  margin: 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.iconbtn--account.is-signed-in { color: var(--accent); }
 
 /* ---------- toast ---------- */
 .toast {
