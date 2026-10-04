@@ -25,7 +25,7 @@
 
   /* reader type scale, multiplied by --reader-scale */
   --reader-scale: 1;
-  --measure: 90ch;
+  --measure: 120ch;
 
   /* book grid: full-bleed up to this width, then centred */
   --grid-width: 1560px;
@@ -232,7 +232,7 @@ svg { fill: currentColor; }
 /* ---------- main ---------- */
 .main {
   padding: 4px 12px calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 28px);
-  max-width: 1024px;
+  max-width: 2500px;
   margin: 0 auto;
 }
 /* the grid screens use the whole viewport, capped and centred on wide displays */
