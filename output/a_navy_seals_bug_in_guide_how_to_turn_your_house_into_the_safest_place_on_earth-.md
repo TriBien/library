@@ -1,3 +1,0 @@
-**TL;DR:** *A Navy SEAL’s Bug-In Guide* đáng đọc nếu bạn muốn xây dựng tư duy **home resilience**: làm cho ngôi nhà có khả năng duy trì an toàn, nước, thực phẩm, năng lượng và liên lạc khi hạ tầng bên ngoài bị gián đoạn. Nhưng cần đọc với thái độ phản biện: nhãn “Navy SEAL” dễ tạo **authority bias**, và nhiều lời khuyên sinh tồn có thể hữu ích về nguyên tắc nhưng không nhất thiết tối ưu cho bối cảnh Việt Nam.
-
-Nếu bạn muốn, tôi có thể phân tích cuốn sách theo 5 lớp: **(1) luận điểm cốt lõi → (2) bằng chứng → (3) điểm mạnh/yếu → (4) những gì cần loại bỏ hoặc điều chỉnh → (5) hệ thống bug-in thực tế cho một gia đình ở Việt Nam.**
