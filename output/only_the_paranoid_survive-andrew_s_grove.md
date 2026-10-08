@@ -896,6 +896,4 @@ Giá trị cho tư duy cá nhân/career: 9/10.
 
 Và nếu nối với mục tiêu tự rèn luyện dài hạn của bạn, tôi sẽ rút ra một nguyên tắc: đừng chỉ quan sát hành vi của mình; hãy thường xuyên kiểm tra những giả định đang tạo ra hành vi đó. Khi assumption thay đổi mà ta vẫn bám vào nó vì attachment, chính attachment trở thành nguồn gốc của sai lầm.
 
-Hmm...something seems to have gone wrong.
 
-Retry
