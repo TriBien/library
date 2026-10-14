@@ -359,6 +359,7 @@ body:not(.is-reader) .main {
   margin: 10px 0 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--grid-gap);
   /* tracks have a max width, so slack becomes symmetric centring */
   justify-content: center;
@@ -373,7 +374,7 @@ body:not(.is-reader) .main {
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
   align-items: flex-start;
   padding: 14px 56px 14px 14px;
@@ -810,6 +811,7 @@ body.is-reader .toast { bottom: calc(env(safe-area-inset-bottom) + 16px); }
     /* one fixed row height for every card, sized for a 2-line title */
     grid-auto-rows: 252px;
   }
+  .card { flex-direction: column; }
   .tabbar {
     left: 50%;
     right: auto;
