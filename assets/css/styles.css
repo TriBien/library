@@ -358,7 +358,7 @@ body:not(.is-reader) .main {
   list-style: none;
   margin: 10px 0 0;
   padding: 0;
-  display: grid;
+  /* display: grid; */
   gap: var(--grid-gap);
   /* tracks have a max width, so slack becomes symmetric centring */
   justify-content: center;
