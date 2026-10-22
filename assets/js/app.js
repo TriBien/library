@@ -426,9 +426,148 @@
     els.badge.textContent = count > 99 ? '99+' : String(count);
   }
 
-  /* ---------------- markdown ---------------- */
+  /* ---------------- markdown ----------------
+     The reviews carry LaTeX. Marked would unescape the backslashes of
+     \[ \] and \( \) and leave the rest as plain text, so every formula is
+     lifted out of the markdown first, parked behind a placeholder and put
+     back as KaTeX output once the markdown has become HTML.
+
+     The delimiters the reviews use are recognised: $$…$$ and \\[…\\] for a
+     formula on a line of its own, \(…\) and \\(…\\) for one inside a
+     sentence. A single $ is left alone — in this corpus it is a price,
+     not a formula. */
 
   var contentCache = {};
+
+  var MATH_PATTERN =
+    /\$\$([\s\S]*?)\$\$|\\\\\[([\s\S]*?)\\\\\]|\\\\\(([\s\S]*?)\\\\\)|\\\(([\s\S]*?)\\\)/g;
+  var MATH_TOKEN = /\uE000(\d+)\uE001/g;
+
+  function renderMarkdown(text) {
+    var formulas = [];
+
+    function stash(body, display) {
+      formulas.push({ tex: body, display: display });
+      return '\uE000' + (formulas.length - 1) + '\uE001';
+    }
+
+    var source = text
+      .replace(MATH_PATTERN, function (match, dollar, shown, wrapped, inline) {
+        if (dollar != null) return stash(dollar, true);
+        if (shown != null) return stash(unescapeMath(shown), true);
+        if (wrapped != null) return stash(unescapeMath(wrapped), false);
+        return stash(inline, false);
+      })
+      // \[ … \] on a line of its own is a formula as well; inside a link
+      // label it is only an escaped bracket, so it stays where it is
+      .replace(/^[ \t]*\\\[([^\n]*?)\\\][ \t]*$/gm, function (match, body) {
+        return stash(body, true);
+      });
+
+    var holder = document.createElement('div');
+    holder.innerHTML = window.marked.parse(source, { gfm: true, breaks: true });
+    putFormulas(holder, formulas);
+    return holder.innerHTML;
+  }
+
+  /* some reviews escape a LaTeX character twice (\\% for a per cent sign);
+     the extra backslash is dropped before KaTeX sees the formula */
+  function unescapeMath(body) {
+    return body.replace(/\\\\([%$*_&#{}~^])/g, '\\$1');
+  }
+
+  function putFormulas(holder, formulas) {
+    if (!formulas.length) return;
+
+    var walker = document.createTreeWalker(holder, NodeFilter.SHOW_TEXT, null);
+    var texts = [];
+    var node;
+    while ((node = walker.nextNode())) texts.push(node);
+
+    var placed = [];
+
+    texts.forEach(function (textNode) {
+      var text = textNode.nodeValue;
+      if (text.indexOf('\uE000') === -1) return;
+
+      var fragment = document.createDocumentFragment();
+      var last = 0;
+      var match;
+
+      MATH_TOKEN.lastIndex = 0;
+      while ((match = MATH_TOKEN.exec(text))) {
+        if (match.index > last) {
+          fragment.appendChild(document.createTextNode(text.slice(last, match.index)));
+        }
+        var formula = formulas[Number(match[1])];
+        if (formula) {
+          var node = formulaNode(formula);
+          placed.push(node);
+          fragment.appendChild(node);
+        }
+        last = match.index + match[0].length;
+      }
+      if (last < text.length) {
+        fragment.appendChild(document.createTextNode(text.slice(last)));
+      }
+      textNode.parentNode.replaceChild(fragment, textNode);
+    });
+
+    placed.forEach(liftFormula);
+  }
+
+  function formulaNode(formula) {
+    var node = document.createElement('span');
+    node.className = formula.display ? 'math math--display' : 'math math--inline';
+    node.innerHTML = formulaHtml(formula);
+    return node;
+  }
+
+  function formulaHtml(formula) {
+    if (window.katex && typeof window.katex.renderToString === 'function') {
+      try {
+        return window.katex.renderToString(formula.tex, {
+          displayMode: formula.display,
+          throwOnError: false,
+          strict: 'ignore'
+        });
+      } catch (err) {
+        /* no formula, no harm: the source is shown instead */
+      }
+    }
+    return '<code class="math__source">' + escapeHtml(formula.tex) + '</code>';
+  }
+
+  /* a formula that is alone in its paragraph gets a paragraph of its own,
+     and the line breaks marked leaves around it are taken away */
+  function liftFormula(node) {
+    var parent = node.parentNode;
+    if (!parent) return;
+
+    if (parent.nodeName === 'P' && onlyChildIs(parent, node)) {
+      parent.parentNode.replaceChild(node, parent);
+    }
+
+    var before = node.previousSibling;
+    var after = node.nextSibling;
+    if (before && before.nodeName === 'BR') before.parentNode.removeChild(before);
+    if (after && after.nodeName === 'BR') after.parentNode.removeChild(after);
+  }
+
+  function onlyChildIs(parent, node) {
+    var kids = parent.childNodes;
+    var only = null;
+    for (var i = 0; i < kids.length; i++) {
+      var kid = kids[i];
+      if (kid.nodeType === 3) {
+        if (kid.nodeValue.trim() !== '') return false;
+        continue;
+      }
+      if (only) return false;
+      only = kid;
+    }
+    return only === node;
+  }
 
   function fetchMarkdown(book) {
     if (contentCache[book.id]) return Promise.resolve(contentCache[book.id]);
@@ -1163,7 +1302,7 @@
 
     fetchMarkdown(book)
       .then(function (text) {
-        content.innerHTML = window.marked.parse(text, { gfm: true, breaks: true });
+        content.innerHTML = renderMarkdown(text);
         reader.removeAttribute('aria-busy');
         reader.appendChild(readerFooter(book));
         restoreScroll(book);
