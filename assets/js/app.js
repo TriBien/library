@@ -435,7 +435,8 @@
      The delimiters the reviews use are recognised: $$…$$ and \\[…\\] for a
      formula on a line of its own, \(…\) and \\(…\\) for one inside a
      sentence. A single $ is left alone — in this corpus it is a price,
-     not a formula. */
+     not a formula. A \[ … \] without a command is an escaped bracket, as
+     in a link label, and stays text. */
 
   var contentCache = {};
 
@@ -458,11 +459,14 @@
         if (wrapped != null) return stash(unescapeMath(wrapped), false);
         return stash(inline, false);
       })
-      // \[ … \] on a line of its own is a formula as well; inside a link
-      // label it is only an escaped bracket, so it stays where it is
-      .replace(/^[ \t]*\\\[([^\n]*?)\\\][ \t]*$/gm, function (match, body) {
+      // \[ … \] is a formula as well, but only when it holds a command:
+      // without one it is just an escaped bracket, as in a link label
+      .replace(/\\\[([\s\S]*?)\\\]/g, function (match, body, offset, whole) {
+        if (!hasCommand(body) && !aloneOnLine(whole, offset, match.length)) return match;
         return stash(body, true);
       });
+
+    source = putBareMath(source, stash);
 
     var holder = document.createElement('div');
     holder.innerHTML = window.marked.parse(source, { gfm: true, breaks: true });
@@ -474,6 +478,192 @@
      the extra backslash is dropped before KaTeX sees the formula */
   function unescapeMath(body) {
     return body.replace(/\\\\([%$*_&#{}~^])/g, '\\$1');
+  }
+
+  function hasCommand(body) {
+    return /\\[a-zA-Z]+/.test(body);
+  }
+
+  function aloneOnLine(text, offset, length) {
+    var lineStart = text.lastIndexOf('\n', offset - 1) + 1;
+    if (text.slice(lineStart, offset).replace(/\s/g, '') !== '') return false;
+    var lineEnd = text.indexOf('\n', offset + length);
+    if (lineEnd === -1) lineEnd = text.length;
+    return text.slice(offset + length, lineEnd).replace(/\s/g, '') === '';
+  }
+
+  /* A few reviews lost the delimiter of a formula: the LaTeX was pasted
+     next to a plain-text copy of the same formula. The LaTeX is found by
+     looking for a command and taking everything that belongs to it; when
+     the plain-text copy stands on both sides of it, the line holds the
+     formula twice and one rendering is enough. */
+  function putBareMath(source, stash) {
+    var out = '';
+    var pos = 0;
+
+    while (pos < source.length) {
+      var lineEnd = source.indexOf('\n', pos);
+      if (lineEnd === -1) lineEnd = source.length;
+
+      var line = source.slice(pos, lineEnd);
+      out += bareMathInLine(line, stash);
+      if (lineEnd < source.length) out += '\n';
+      pos = lineEnd + 1;
+    }
+    return out;
+  }
+
+  function bareMathInLine(line, stash) {
+    var runs = findBareMath(line);
+    if (!runs.length) return line;
+
+    // the line may hold the formula twice: the plain-text copy and the
+    // LaTeX of it — one rendering is enough
+    var whole = duplicatedFormula(line, runs);
+    if (whole) return stash(whole, true);
+
+    var out = '';
+    var last = 0;
+
+    runs.forEach(function (run) {
+      out += line.slice(last, run.start);
+      out += stash(run.body, false);
+      last = run.end;
+    });
+
+    out += line.slice(last);
+    return out;
+  }
+
+  /* The line holds the same text twice and the LaTeX in between: the
+     plain-text copy of a formula, its LaTeX and the copy again. */
+  function duplicatedFormula(line, runs) {
+    var size = line.length;
+
+    for (var k = Math.floor(size / 2); k > 0; k--) {
+      if (line.slice(0, k) !== line.slice(size - k)) continue;
+
+      var middle = line.slice(k, size - k);
+      for (var i = 0; i < runs.length; i++) {
+        var run = runs[i];
+        if (run.start < k || run.end > size - k) continue;
+
+        var before = middle.slice(0, run.start - k);
+        var after = middle.slice(run.end - k);
+        if (!/^[A-Za-z0-9 ]{0,4}$/.test(before)) continue;
+        if (!/^[A-Za-z0-9 ]{0,4}$/.test(after)) continue;
+        return middle;
+      }
+    }
+    return null;
+  }
+
+  function findBareMath(text) {
+    var runs = [];
+    var i = 0;
+
+    while (i < text.length) {
+      if (text.charAt(i) !== '\\') {
+        i++;
+        continue;
+      }
+      var run = scanFormula(text, i);
+      if (!run) {
+        i++;
+        continue;
+      }
+      runs.push(run);
+      i = run.end;
+    }
+    return runs;
+  }
+
+  function scanFormula(text, start) {
+    var i = start;
+    var parens = 0;
+    var grouped = false;
+    var commands = 0;
+    var body = '';
+
+    while (i < text.length) {
+      var ch = text.charAt(i);
+
+      if (ch === '\n') break;
+
+      if (ch === '\\') {
+        var command = /^\\([a-zA-Z]+)/.exec(text.slice(i));
+        if (!command) break;
+        body += command[0];
+        i += command[0].length;
+        commands++;
+        if (text.charAt(i) === '{') {
+          var group = matchBraces(text, i);
+          if (!group) break;
+          body += group.text;
+          i = group.end;
+          grouped = true;
+        }
+        continue;
+      }
+
+      if (ch === '(') {
+        parens++;
+      } else if (ch === ')') {
+        parens--;
+        if (parens < 0) break;
+      } else if (ch === '{') {
+        var block = matchBraces(text, i);
+        if (!block) break;
+        body += block.text;
+        i = block.end;
+        grouped = true;
+        continue;
+      } else if (/[A-Za-z0-9]/.test(ch)) {
+        // a letter is part of the formula only when something follows it
+        if (parens === 0) {
+          var next = nextMeaningful(text, i + 1);
+          if (!next || !/[=+\-*/^_.,:!<>|~(\\({]/.test(next)) break;
+        }
+      } else if (!/[=+\-*/^_.,:!<>|~ ]/.test(ch)) {
+        break;
+      }
+
+      body += ch;
+      i++;
+    }
+
+    // a group (\text{…}) or a chain of commands: anything less is a word
+    if (!grouped && commands < 2) return null;
+
+    // the spaces in front of the next word belong to the text, not to the
+    // formula
+    var trimmed = body.replace(/\s+$/, '');
+    if (trimmed !== body) body = trimmed;
+    return { start: start, end: start + body.length, body: body };
+  }
+
+  function matchBraces(text, start) {
+    var depth = 0;
+    for (var i = start; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (ch === '{') depth++;
+      else if (ch === '}') {
+        depth--;
+        if (depth === 0) return { text: text.slice(start, i + 1), end: i + 1 };
+      } else if (ch === '\n') {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  function nextMeaningful(text, from) {
+    for (var i = from; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (ch === '\n') return '';
+      if (!/\s/.test(ch)) return ch;
+    }
+    return '';
   }
 
   function putFormulas(holder, formulas) {
@@ -525,6 +715,13 @@
 
   function formulaHtml(formula) {
     if (window.katex && typeof window.katex.renderToString === 'function') {
+      var warn = console.warn;
+      // KaTeX warns about every Vietnamese letter it has no metrics for;
+      // those are set in the reader's font, so the warning is only noise
+      console.warn = function (message) {
+        if (typeof message === 'string' && message.indexOf('No character metrics') === 0) return;
+        warn.apply(console, arguments);
+      };
       try {
         return window.katex.renderToString(formula.tex, {
           displayMode: formula.display,
@@ -533,6 +730,8 @@
         });
       } catch (err) {
         /* no formula, no harm: the source is shown instead */
+      } finally {
+        console.warn = warn;
       }
     }
     return '<code class="math__source">' + escapeHtml(formula.tex) + '</code>';

@@ -20,6 +20,9 @@ laptop.
 
 - The `TL;DR` paragraph is highlighted as a lede; numbered sections in the
   markdown become an accent-coloured list.
+- Formulas are typeset: the LaTeX of a review (`$$…$$`, `\[…\]`, `\(…\)` and
+  the few lines that lost their delimiter) is rendered with KaTeX, which is
+  vendored under `assets/vendor/katex/` and served from the site itself.
 - `A−` / `A+` in the top bar changes the text size (80 %–160 %). The setting is
   remembered and applied to every book.
 - The sun/moon button switches between light and dark theme. On first visit the
@@ -107,7 +110,7 @@ index.html              app shell
 assets/css/styles.css   design tokens, themes, all layout
 assets/js/app.js        router, screens, state, drive sync
 assets/js/gdrive.js     Google sign-in + Drive REST calls
-assets/vendor/          vendored libraries (marked) — never load from a CDN
+assets/vendor/          vendored libraries (marked, KaTeX) — never load from a CDN
 _site/                  generated deployable copy (git-ignored)
 ```
 
@@ -132,13 +135,19 @@ python3 tools/build.py --no-site
 
 ### Coding guidelines
 
-- **No build step, no framework.** `index.html` loads three plain scripts; the
-  app is two small IIFEs, `assets/js/app.js` and `assets/js/gdrive.js`, using
-  ES5-style syntax so they run in older mobile browsers without transpiling.
+- **No build step, no framework.** `index.html` loads four plain scripts
+  (marked, KaTeX, `gdrive.js`, `app.js`); the app is two small IIFEs,
+  `assets/js/app.js` and `assets/js/gdrive.js`, using ES5-style syntax so they
+  run in older mobile browsers without transpiling.
 - **Relative URLs only.** The site is served from `https://<user>.github.io/library/`,
   so every `href`/`src`/`fetch` must stay relative.
 - **Markdown is fetched lazily.** `data/books.json` only carries metadata;
   the `.md` file is requested when a book is opened and cached in memory.
+- **LaTeX is lifted out before marked runs.** Marked unescapes `\[` and `\(`
+  and would leave the formula as plain text, so `renderMarkdown()` in
+  `app.js` takes every formula out of the source, parks it behind a
+  placeholder and puts the KaTeX output back once the HTML exists. A single
+  `$` stays a `$` — in the reviews it is a price.
 - **Styling:** mobile-first. The grid is one column on phones and goes
   2 → 3 → 4 → **5 columns** at 640 / 900 / 1120 / 1280 px. It is full-bleed up
   to `--grid-width` (1560 px) and centred above that, so cards never stretch
