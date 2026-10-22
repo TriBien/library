@@ -31,6 +31,7 @@
     actions: document.getElementById('appbar-actions'),
     tabbar: document.getElementById('tabbar'),
     badge: document.getElementById('history-badge'),
+    readingBadge: document.getElementById('reading-badge'),
     toast: document.getElementById('toast')
   };
 
@@ -413,6 +414,26 @@
     });
   }
 
+  /* the books the reader has started but not finished: a saved position
+     above zero and no finishing date. Most recent first. */
+  function readingBooks() {
+    return books
+      .filter(function (book) {
+        if (isDone(book.id)) return false;
+        var resume = state.lastRead[book.id];
+        return !!resume && resume.percent > 0;
+      })
+      .sort(function (a, b) {
+        return state.lastRead[b.id].updatedAt - state.lastRead[a.id].updatedAt;
+      });
+  }
+
+  function booksFor(kind) {
+    if (kind === 'history') return doneBooks();
+    if (kind === 'reading') return readingBooks();
+    return unreadBooks();
+  }
+
   function findBook(id) {
     for (var i = 0; i < books.length; i++) {
       if (books[i].id === id) return books[i];
@@ -424,6 +445,10 @@
     var count = Object.keys(state.done).length;
     els.badge.hidden = count === 0;
     els.badge.textContent = count > 99 ? '99+' : String(count);
+
+    var reading = readingBooks().length;
+    els.readingBadge.hidden = reading === 0;
+    els.readingBadge.textContent = reading > 99 ? '99+' : String(reading);
   }
 
   /* ---------------- markdown ----------------
@@ -850,16 +875,32 @@
 
   /* ---------------- book card ---------------- */
 
-  function bookRow(book, showDate) {
+  function bookRow(book, mode) {
     var done = isDone(book.id);
     var resume = state.lastRead[book.id];
+    var isHistory = mode === 'history';
+    var isReading = mode === 'reading';
 
     var meta = [];
-    if (showDate) meta.push('Finished ' + formatDate(state.done[book.id].finishedAt));
+    if (isHistory) meta.push('Finished ' + formatDate(state.done[book.id].finishedAt));
     meta.push(book.minutes + ' min read');
     if (book.words) meta.push(book.words.toLocaleString() + ' words');
-    if (resume && !showDate && resume.percent > 2 && resume.percent < 97) {
+    if (isReading && resume) {
+      var percent = Math.round(resume.percent);
+      meta.unshift(percent >= 97 ? 'Almost done' : percent + '% read');
+      meta.push('last read ' + timeAgo(resume.updatedAt));
+    } else if (resume && !isHistory && resume.percent > 2 && resume.percent < 97) {
       meta.push(Math.round(resume.percent) + '% read');
+    }
+
+    var track = '';
+    if (isReading && resume) {
+      track =
+        '<span class="card__progress">' +
+        '<span class="card__progress__fill" style="width:' +
+        clamp(resume.percent, 0, 100) +
+        '%"></span>' +
+        '</span>';
     }
 
     var row = el('li', 'row');
@@ -880,6 +921,7 @@
       '<span class="card__meta">' +
       meta.map(escapeHtml).join('<span class="dot">·</span>') +
       '</span>' +
+      track +
       '</span>';
 
     var action = el(
@@ -922,14 +964,21 @@
 
   function renderCollection(kind) {
     var isHistory = kind === 'history';
+    var isReading = kind === 'reading';
     var query = '';
-    var all = isHistory ? doneBooks() : unreadBooks();
+    var all = booksFor(kind);
+
+    var titles = {
+      library: 'Library',
+      history: 'Reading History',
+      reading: 'Currently Reading'
+    };
+    var counts = { library: 'left to read', history: 'finished', reading: 'in progress' };
 
     setScreens(
-      isHistory ? 'Reading History' : 'Library',
+      titles[kind],
       all.length
-        ? all.length + (all.length === 1 ? ' book' : ' books') +
-          (isHistory ? ' finished' : ' left to read')
+        ? all.length + (all.length === 1 ? ' book' : ' books') + ' ' + counts[kind]
         : ''
     );
 
@@ -941,7 +990,11 @@
 
     var input = document.createElement('input');
     input.type = 'search';
-    input.placeholder = isHistory ? 'Search finished books' : 'Search books or authors';
+    input.placeholder = isHistory
+      ? 'Search finished books'
+      : isReading
+        ? 'Search books in progress'
+        : 'Search books or authors';
     input.setAttribute('aria-label', input.placeholder);
 
     var clear = iconButton(svg(ICONS.close), 'Clear search', {
@@ -959,10 +1012,10 @@
     var count = el('p', 'count');
 
     var holder = el('div', 'holder');
-    var listWrap = el('ul', 'list');
+    var listWrap = el('ul', 'list' + (isReading ? ' list--reading' : ''));
 
     function refresh() {
-      all = isHistory ? doneBooks() : unreadBooks();
+      all = booksFor(kind);
       var needle = query.toLowerCase();
       var visible = needle
         ? all.filter(function (book) {
@@ -978,7 +1031,7 @@
 
       if (visible.length) {
         visible.forEach(function (book) {
-          listWrap.appendChild(bookRow(book, isHistory));
+          listWrap.appendChild(bookRow(book, kind));
         });
         holder.innerHTML = '';
         holder.appendChild(listWrap);
@@ -998,6 +1051,14 @@
             '📚',
             'Nothing finished yet',
             'Books you mark as Done land here, ready to re-read.'
+          )
+        );
+      } else if (isReading) {
+        holder.appendChild(
+          emptyState(
+            '📖',
+            'Nothing in progress',
+            'Open a book and read a little — your place is kept here so you can pick it up again.'
           )
         );
       } else if (books.length) {
@@ -1030,7 +1091,7 @@
 
     collection.refresh = refresh;
     refresh();
-    markActiveTab(isHistory ? 'history' : 'library');
+    markActiveTab(kind);
   }
 
   /* ---------------- google drive sync ----------------
@@ -1197,7 +1258,9 @@
 
     if (changed) {
       renderBadge();
-      if (route.name === 'library' || route.name === 'history') collection.refresh();
+      if (route.name === 'library' || route.name === 'history' || route.name === 'reading') {
+        collection.refresh();
+      }
     }
     return changed;
   }
@@ -1570,6 +1633,8 @@
       if (!previous || Math.abs(previous.percent - percent) >= 1) {
         state.lastRead[book.id] = { percent: percent, updatedAt: Date.now() };
         touch();
+        renderBadge();
+        if (route.name === 'reading') collection.refresh();
       }
     }, 500);
   }
@@ -1607,6 +1672,9 @@
     if (hash.indexOf('history') === 0) {
       return { name: 'history', id: '' };
     }
+    if (hash.indexOf('reading') === 0) {
+      return { name: 'reading', id: '' };
+    }
     if (hash.indexOf('account') === 0) {
       return { name: 'account', id: '' };
     }
@@ -1634,11 +1702,13 @@
     if (!books.length) return;
 
     if (route.name === 'reader') {
-      route.returnTab = previous === 'history' ? 'history' : 'library';
+      route.returnTab = previous === 'history' || previous === 'reading' ? previous : 'library';
       renderReader();
       markActiveTab(route.returnTab);
     } else if (route.name === 'history') {
       renderCollection('history');
+    } else if (route.name === 'reading') {
+      renderCollection('reading');
     } else {
       renderCollection('library');
     }

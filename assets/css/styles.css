@@ -298,6 +298,13 @@ body:not(.is-reader) .main {
   text-align: center;
 }
 
+/* the in-progress count is a quiet hint, not a call to action */
+.tab__badge--soft {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
 /* ---------- toolbars / filters ---------- */
 .toolbar {
   display: flex;
@@ -468,6 +475,22 @@ body:not(.is-reader) .main {
   color: var(--muted);
 }
 .card__meta .dot { opacity: .5; }
+
+/* how far the reader got through a book */
+.card__progress {
+  display: block;
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.card__progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
 
 /* card action button (mark done / move back) */
 .card__action {
@@ -876,3 +899,7 @@ body.is-reader .toast { bottom: calc(env(safe-area-inset-bottom) + 16px); }
     padding-right: calc((100% - var(--grid-width)) / 2 + 24px);
   }
 }
+
+/* the in-progress list is short and its cards carry a progress bar:
+   let them take the height they need instead of clipping them */
+.list--reading { grid-auto-rows: auto; }
