@@ -1,1 +1,0 @@
-Designed and implemented Java-based API integrations across SAP, Salesforce, and the e-invoicing platform using MuleSoft Anypoint Platform and Java.
