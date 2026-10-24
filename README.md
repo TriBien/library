@@ -10,6 +10,8 @@ runtime dependencies, no backend.
 
 - Tap a card to open the review.
 - Search by title or author with the box above the list.
+- The shuffle button beside the search box opens a random book you have not
+  finished yet.
 - The check button on a card marks the book as **Done** without opening it.
 
 On a phone the list is a single column of full-width cards. From tablet width

@@ -356,6 +356,14 @@ body:not(.is-reader) .main {
   height: 38px;
 }
 
+.toolbar__random {
+  flex: 0 0 auto;
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--muted);
+}
+.toolbar__random:hover { color: var(--text); }
+
 .count {
   margin: 10px 2px 0;
   text-align: center;

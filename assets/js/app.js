@@ -57,6 +57,8 @@
     close:
       '<path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z"/>',
     plus: '<path d="M12 4a1 1 0 0 1 1 1v6h6a1 1 0 0 1 0 2h-6v6a1 1 0 0 1-2 0v-6H5a1 1 0 0 1 0-2h6V5a1 1 0 0 1 1-1"/>',
+    shuffle:
+      '<path d="M17 3h4v4h-2V6.4l-3.3 3.3-1.4-1.4L17.6 5H17zm-10 0v2H5v3H3V3zm14 14v2h-4v-2h.6l-3.3-3.3 1.4-1.4L19 15.6V17zM5 19v-2H3v4h4v-2zm1.4-1.4L17.6 6.4 19 7.8 7.8 19z"/>',
     minus: '<path d="M5 11.25h14a.9.9 0 0 1 0 1.5H5a.9.9 0 0 1 0-1.5"/>',
     check: '<path d="M9.6 16.2 5.4 12l-1.4 1.4 5.6 5.6L20.4 8.2 19 6.8z"/>',
     checkCircle:
@@ -439,6 +441,17 @@
       if (books[i].id === id) return books[i];
     }
     return null;
+  }
+
+  /* open a random book from the Library (finished books are left out) */
+  function openRandomBook() {
+    var pool = unreadBooks();
+    if (!pool.length) {
+      toast('No books left to pick from');
+      return;
+    }
+    var book = pool[Math.floor(Math.random() * pool.length)];
+    location.hash = '#/book/' + encodeURIComponent(book.id);
   }
 
   function renderBadge() {
@@ -1085,6 +1098,16 @@
     box.appendChild(input);
     box.appendChild(clear);
     toolbar.appendChild(box);
+
+    if (kind === 'library') {
+      toolbar.appendChild(
+        iconButton(svg(ICONS.shuffle), 'Pick a random book', {
+          className: 'toolbar__random',
+          handler: openRandomBook
+        })
+      );
+    }
+
     els.main.appendChild(toolbar);
     els.main.appendChild(count);
     els.main.appendChild(holder);
