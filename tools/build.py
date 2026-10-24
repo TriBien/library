@@ -27,7 +27,7 @@ SITE_DIR = ROOT / "_site"
 MANIFEST = DATA_DIR / "books.json"
 CONFIG = DATA_DIR / "config.json"
 
-SITE_FILES = ["index.html", ".nojekyll", "site.webmanifest"]
+SITE_FILES = ["index.html", ".nojekyll", "site.webmanifest", "robots.txt", "sitemap.xml"]
 SITE_DIRS = ["assets", "icons"]
 
 # Words that stay lowercase inside a slug turned back into a title.
