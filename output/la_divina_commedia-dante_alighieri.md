@@ -1,1 +1,0 @@
-Đâu cần thanh niên có, việc gì khó có thanh niên
