@@ -1,0 +1,1 @@
+Collaborated on system design, implementation, and technical problem-solving while mentoring engineers and promoting engineering practices across development, testing, and deployme
