@@ -1,0 +1,5 @@
+Led the technical design and implementation of enterprise integration solutions connecting SAP and Salesforce with Malaysia's national e-invoicing platform
+Designed and implemented fault-tolerant integration workflows, incorporating retry mechanisms, idempotency, and reconciliation processes to ensure data consistency, prevent duplicate transactions, and minimize document loss across distributed systems.
+Established integration reliability and operational standards, improving error handling, monitoring, and performance optimization to strengthen production stability and system resilience.
+Established a quality-first engineering culture by driving automation testing, ensuring solution reliability and maintaining high standards throughout the development lifecycle.
+Collaborated with cross-functional stakeholders to translate functional and non-functional requirements into technical solutions, ensuring integration reliability, maintainability, and alignment with enterprise architecture standards.
