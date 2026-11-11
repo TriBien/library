@@ -1,0 +1,1 @@
+Automation Technology - HCM University of Technology and Education | Aug 2009-Jan 2013 | GPA: 8.58/10
