@@ -1,1 +1,0 @@
-Independently architected and built an ML-driven stock forecasting platform that transforms complex market data into actionable institutional investment insights.
