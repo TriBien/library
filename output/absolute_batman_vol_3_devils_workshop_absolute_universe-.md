@@ -1,0 +1,1 @@
+Independently building a retail management platform that helps store owners streamline daily operations, improve sales and inventory control, and make data-informed business decisions.
