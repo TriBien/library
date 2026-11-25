@@ -1,1 +1,0 @@
-enterprise integrations for internal Petronas services and integration between petronas with external vendors
